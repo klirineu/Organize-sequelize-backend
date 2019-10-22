@@ -12,7 +12,6 @@ class User extends Model {
         sequelize,
         tableName: "users",
 
-        freezeTableName: true,
         hooks: {
           beforeCreate: user => {
             const salt = bcrypt.genSaltSync();

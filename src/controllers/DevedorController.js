@@ -6,10 +6,11 @@ module.exports = {
     const { user_id } = req.params;
 
     const user = await User.findByPk(user_id, {
-      include: { association: "devedores" }
+      include: { association: "devedores" },
+      attributes: ["name"]
     });
 
-    return res.json(user.devedores);
+    return res.json(user);
   },
 
   async store(req, res) {
@@ -20,7 +21,7 @@ module.exports = {
     const user = await User.findByPk(user_id);
 
     if (!user) {
-      return res.status(400).json({ error: "User not found" });
+      return res.status(400).json({ error: "Usuário ná existe" });
     }
 
     const devedores = await Devedor.create({
