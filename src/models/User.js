@@ -5,8 +5,35 @@ class User extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: DataTypes.STRING,
-        password: DataTypes.STRING
+        name: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+            len: {
+              args: [4, 30],
+              msg: "Esse campo deve ter entre 4 e 30 caracteres"
+            },
+            notEmpty: {
+              msg: "Esse campo não pode ser vazio"
+            },
+            isAlpha: {
+              msg: "Esse campo só pode ter letras"
+            }
+          }
+        },
+        password: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+            notEmpty: {
+              msg: "Esse campo não pode ser vazio"
+            },
+            min: {
+              args: 4,
+              msg: "Senha deve ter mais que 4 caracteres"
+            }
+          }
+        }
       },
       {
         sequelize,
