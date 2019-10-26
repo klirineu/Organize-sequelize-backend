@@ -28,8 +28,8 @@ class User extends Model {
             notEmpty: {
               msg: "Esse campo não pode ser vazio"
             },
-            min: {
-              args: 4,
+            len: {
+              args: [4],
               msg: "Senha deve ter mais que 4 caracteres"
             }
           }
