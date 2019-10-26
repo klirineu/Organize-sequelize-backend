@@ -19,6 +19,21 @@ module.exports = {
     return res.json({ user, token });
   },
 
+  async update(req, res) {
+    const { user_id } = req.params;
+    const { name, password } = req.body;
+
+    const user = await User.findByPk(user_id);
+
+    if (!user) {
+      return res.status(400).json({ error: "Usuário não existe" });
+    }
+
+    await user.update({ name, password }, { where: { id: user_id } });
+
+    return res.json(user);
+  },
+
   async delete(req, res) {
     const { user_id } = req.params;
 

@@ -16,5 +16,8 @@ Routes.use(authMiddleware);
 
 Routes.get("/users/:user_id/devedores", DevedorController.index);
 Routes.post("/users/:user_id/devedores", DevedorController.store);
+Routes.put("/users/:user_id", UserController.update);
+Routes.put("/users/:user_id/devedores/:dev_id", DevedorController.update);
+Routes.delete("/users/:user_id/devedores/:dev_id", DevedorController.delete);
 
 module.exports = Routes;
