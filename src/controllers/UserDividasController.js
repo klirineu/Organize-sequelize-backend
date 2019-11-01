@@ -1,6 +1,5 @@
 const User = require("../models/User");
-const Devedor = require("../models/Devedores");
-const DevedorDivida = require("../models/DevedorDividas");
+const UserDividas = require("../models/UserDividas");
 
 module.exports = {
   async index(req, res) {
@@ -8,14 +7,7 @@ module.exports = {
       const { user_id } = req.params;
 
       const user = await User.findByPk(user_id, {
-        include: [
-          {
-            model: Devedor,
-            as: "devedores",
-            include: { model: DevedorDivida, as: "devedor_dividas" },
-            attributes: ["name"]
-          }
-        ],
+        include: { association: "user_dividas" },
         attributes: ["name"]
       });
 
@@ -33,7 +25,7 @@ module.exports = {
     try {
       const { user_id } = req.params;
 
-      const { name } = req.body;
+      const { Vdiv, parc } = req.body;
 
       const user = await User.findByPk(user_id);
 
@@ -41,12 +33,13 @@ module.exports = {
         return res.status(400).json({ error: "Usuário não existe" });
       }
 
-      const devedores = await Devedor.create({
-        name,
+      const divida = await UserDividas.create({
+        Vdiv,
+        parc,
         user_id
       });
 
-      return res.json(devedores);
+      return res.json(divida);
     } catch (err) {
       res.status(400).json({ error: err });
     }
@@ -54,8 +47,8 @@ module.exports = {
 
   async update(req, res) {
     try {
-      const { name } = req.body;
-      const { dev_id, user_id } = req.params;
+      const { Vdiv, parc } = req.body;
+      const { div_id, user_id } = req.params;
 
       const user = await User.findByPk(user_id);
 
@@ -63,24 +56,22 @@ module.exports = {
         return res.status(400).json({ error: "Usuário não existe" });
       }
 
-      const devedor = await Devedor.findOne({ where: { id: dev_id } });
+      const divida = await UserDividas.findOne({ where: { id: div_id } });
 
-      if (!devedor) {
-        return res.status(400).json({ error: "Devedor não existe" });
+      if (!divida) {
+        return res.status(400).json({ error: "Divida não existe" });
       }
 
-      await devedor.update({ name }, { where: { id: dev_id } });
+      await divida.update({ Vdiv, parc }, { where: { id: div_id } });
 
-      return res.json(devedor).catch(err => {
-        res.json({ error: err });
-      });
+      return res.json(divida);
     } catch (err) {
       res.status(400).json({ error: err });
     }
   },
 
   async delete(req, res) {
-    const { dev_id, user_id } = req.params;
+    const { div_id, user_id } = req.params;
 
     const user = await User.findByPk(user_id);
 
@@ -88,13 +79,13 @@ module.exports = {
       return res.status(400).json({ error: "Usuário não existe" });
     }
 
-    const devedor = await Devedor.findOne({ where: { id: dev_id } });
+    const divida = await UserDividas.findOne({ where: { id: div_id } });
 
-    if (!devedor) {
-      return res.status(400).json({ error: "Devedor não existe" });
+    if (!divida) {
+      return res.status(400).json({ error: "Divida não existe" });
     }
 
-    await devedor.destroy();
+    await divida.destroy();
 
     return res.json();
   }

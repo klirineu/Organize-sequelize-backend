@@ -2,22 +2,26 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("devedores", {
+    return queryInterface.createTable("devedor_dividas", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      user_id: {
+      dev_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: "users", key: "id" },
+        references: { model: "devedores", key: "id" },
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
       },
-      name: {
-        type: Sequelize.STRING,
+      Vdiv: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      parc: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       createdAt: Sequelize.DATE,
@@ -26,6 +30,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("devedores");
+    return queryInterface.dropTable("devedor_dividas");
   }
 };

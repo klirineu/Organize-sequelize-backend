@@ -15,9 +15,6 @@ class User extends Model {
             },
             notEmpty: {
               msg: "Esse campo não pode ser vazio"
-            },
-            isAlpha: {
-              msg: "Esse campo só pode ter letras"
             }
           }
         },
@@ -56,6 +53,10 @@ class User extends Model {
 
   static associate(models) {
     this.hasMany(models.Devedores, { foreignKey: "user_id", as: "devedores" });
+    this.hasMany(models.UserDividas, {
+      foreignKey: "user_id",
+      as: "user_dividas"
+    });
   }
 }
 

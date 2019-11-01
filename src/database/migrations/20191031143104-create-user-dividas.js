@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("devedores", {
+    return queryInterface.createTable("user_dividas", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -16,8 +16,12 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
       },
-      name: {
-        type: Sequelize.STRING,
+      Vdiv: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      parc: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       createdAt: Sequelize.DATE,
@@ -26,6 +30,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("devedores");
+    return queryInterface.dropTable("user_dividas");
   }
 };

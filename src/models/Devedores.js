@@ -14,33 +14,6 @@ class Devedores extends Model {
             },
             notEmpty: {
               msg: "Esse campo não pode ser vazio"
-            },
-            isAlpha: {
-              msg: "Esse campo só pode ter letras"
-            }
-          }
-        },
-        Vdiv: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          validate: {
-            notEmpty: {
-              msg: "Esse campo não pode ser vazio"
-            },
-            isNumeric: {
-              msg: "Esse campo só pode ter números"
-            }
-          }
-        },
-        parc: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          validate: {
-            notEmpty: {
-              msg: "Esse campo não pode ser vazio"
-            },
-            isNumeric: {
-              msg: "Esse campo só pode ter números"
             }
           }
         }
@@ -54,6 +27,10 @@ class Devedores extends Model {
 
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: "user_id", as: "user" });
+    this.hasMany(models.DevedorDividas, {
+      foreignKey: "dev_id",
+      as: "devedor_dividas"
+    });
   }
 }
 
