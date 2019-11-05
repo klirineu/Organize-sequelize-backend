@@ -11,6 +11,9 @@ const limiter = require("express-limiter")(app, client);
 const Limiterconfig = require("./config/limiter");
 limiter(Limiterconfig);
 
+const cors = require("cors");
+app.use(cors());
+
 require("dotenv-safe").config();
 require("./database");
 
