@@ -6,11 +6,12 @@ const http = require("http");
 const helmet = require("helmet");
 app.use(helmet());
 
+/*
 const client = require("redis").createClient();
 const limiter = require("express-limiter")(app, client);
 const Limiterconfig = require("./config/limiter");
 limiter(Limiterconfig);
-
+*/
 const cors = require("cors");
 app.use(cors());
 

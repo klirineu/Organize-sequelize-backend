@@ -25,7 +25,7 @@ module.exports = {
 
   async update(req, res) {
     try {
-      const { user_id } = req.params;
+      const user_id = req.userId;
       const { name, password } = req.body;
 
       const user = await User.findByPk(user_id);
@@ -43,7 +43,7 @@ module.exports = {
   },
 
   async delete(req, res) {
-    const { user_id } = req.params;
+    const user_id = req.userId;
 
     const user = await User.findByPk(user_id);
 

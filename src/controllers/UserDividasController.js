@@ -4,9 +4,7 @@ const UserDividas = require("../models/UserDividas");
 module.exports = {
   async index(req, res) {
     try {
-      const { user_id } = req.params;
-
-      const user = await User.findByPk(user_id, {
+      const user = await User.findByPk(req.userId, {
         include: { association: "user_dividas" },
         attributes: ["name"]
       });
@@ -23,9 +21,9 @@ module.exports = {
 
   async store(req, res) {
     try {
-      const { user_id } = req.params;
-
       const { Vdiv, parc } = req.body;
+
+      const user_id = req.userId;
 
       const user = await User.findByPk(user_id);
 
@@ -48,9 +46,9 @@ module.exports = {
   async update(req, res) {
     try {
       const { Vdiv, parc } = req.body;
-      const { div_id, user_id } = req.params;
+      const { div_id } = req.params;
 
-      const user = await User.findByPk(user_id);
+      const user = await User.findByPk(req.userId);
 
       if (!user) {
         return res.status(400).json({ error: "Usuário não existe" });
@@ -71,9 +69,9 @@ module.exports = {
   },
 
   async delete(req, res) {
-    const { div_id, user_id } = req.params;
+    const { div_id } = req.params;
 
-    const user = await User.findByPk(user_id);
+    const user = await User.findByPk(req.userId);
 
     if (!user) {
       return res.status(400).json({ error: "Usuário não existe" });
