@@ -2,8 +2,10 @@ const express = require("express");
 
 const UserController = require("./controllers/UserController");
 const UserDividasController = require("./controllers/UserDividasController");
+const CounterUserParcelasController = require("./controllers/counterUserParcelasController");
 const DevedorController = require("./controllers/DevedorController");
 const DevedorDividasController = require("./controllers/DevedorDividasController");
+const CounterDevedorParcelasController = require("./controllers/counterDevedorParcelasController");
 const AuthController = require("./controllers/AuthController");
 
 const authMiddleware = require("./middlewares/authenticate");
@@ -22,6 +24,10 @@ Routes.delete("/users/", UserController.delete);
 //user_dividas
 Routes.get("/users/user_dividas", UserDividasController.index);
 Routes.post("/users/user_dividas", UserDividasController.store);
+Routes.post(
+  "/users/user_dividas/counter/:div_id",
+  CounterUserParcelasController.store
+);
 Routes.put("/users/user_dividas/:div_id", UserDividasController.update);
 Routes.delete("/users/user_dividas/:div_id", UserDividasController.delete);
 
@@ -40,6 +46,11 @@ Routes.get(
 Routes.post(
   "/devedores/:dev_id/devedor_dividas",
   DevedorDividasController.store
+);
+
+Routes.post(
+  "/devedores/:dev_id/counter/:div_id",
+  CounterDevedorParcelasController.store
 );
 
 Routes.put(

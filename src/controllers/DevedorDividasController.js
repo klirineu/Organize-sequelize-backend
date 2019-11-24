@@ -38,6 +38,8 @@ module.exports = {
         dev_id
       });
 
+      req.io.emit("DevedorDividas", divida);
+
       return res.json(divida);
     } catch (err) {
       return res.status(400).json({ error: err });

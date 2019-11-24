@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const http = require("http");
+const server = require("http").Server(app);
 const helmet = require("helmet");
 app.use(helmet());
 
@@ -18,8 +18,15 @@ app.use(cors());
 require("dotenv-safe").config();
 require("./database");
 
+const io = require("socket.io")(server);
+app.use((req, res, next) => {
+  req.io = io;
+
+  next();
+});
+
 const Routes = require("./routes");
 
 app.use(Routes);
 
-http.createServer(app).listen(process.env.PORT);
+server.listen(process.env.PORT);

@@ -24,6 +24,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      counter: {
+        type: Sequelize.INTEGER,
+        default: 0
+      },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE
     });

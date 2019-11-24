@@ -27,6 +27,10 @@ class DevedorDividas extends Model {
               msg: "Esse campo só pode ter números"
             }
           }
+        },
+        counter: {
+          type: DataTypes.INTEGER,
+          defaultValue: 0
         }
       },
       {

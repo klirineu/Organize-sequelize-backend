@@ -37,6 +37,8 @@ module.exports = {
         user_id
       });
 
+      req.io.emit("UserDividas", divida);
+
       return res.json(divida);
     } catch (err) {
       res.status(400).json({ error: err });

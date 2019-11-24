@@ -11,7 +11,7 @@ module.exports = {
             model: Devedor,
             as: "devedores",
             include: { model: DevedorDivida, as: "devedor_dividas" },
-            attributes: ["name"]
+            attributes: ["id", "name"]
           }
         ],
         attributes: ["name"]
@@ -39,12 +39,14 @@ module.exports = {
         return res.status(400).json({ error: "Usuário não existe" });
       }
 
-      const devedores = await Devedor.create({
+      const devedor = await Devedor.create({
         name,
         user_id
       });
 
-      return res.json(devedores);
+      req.io.emit("Devedor", devedor);
+
+      return res.json(devedor);
     } catch (err) {
       res.status(400).json({ error: err });
     }
